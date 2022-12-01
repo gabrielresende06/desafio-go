@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: sites.local
+      http:
+        paths:
+          - path: /go-k8s
+            pathType: Prefix
+            backend:
+              service:
+                name: app-go-nginx
+                port:
+                  number: 8000
+          - path: /php-test
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-php-service
+                port:
+                  number: 80
+          - path: /dashboard-escolas
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-escolas-service
+                port:
+                  number: 80

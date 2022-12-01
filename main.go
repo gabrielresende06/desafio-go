@@ -1,14 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
 
-func add(number1 int, number2 int) int {
-	return number1 + number2
+func handler(w http.ResponseWriter, _ *http.Request) {
+	w.Write([]byte("test"))
 }
 
 func main() {
-	number1, number2 := 5, 5;
-	
-	result := fmt.Sprintf("%d + %d = %d", number1, number2 , add(number1, number2))
-	fmt.Println(result);
+	http.HandleFunc("/", handler)
+	fmt.Println("Server is running ...")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
